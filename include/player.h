@@ -1,7 +1,7 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "map.h"
+struct map;
 
 struct player {
     float x, y; /* map position */
