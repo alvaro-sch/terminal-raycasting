@@ -11,7 +11,7 @@
  * - the next lines will contain at least widthxheight characters
  * '#' may be used for walls and ' ' for empty spaces
  *
- * - there must be a separator between each row
+ * - there must be a newline between each row
  *
  * not following the guidelines may segfoult the program,
  * if it doesn't it will return a map_err error code
