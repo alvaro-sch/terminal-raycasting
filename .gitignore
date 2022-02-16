@@ -1,0 +1,4 @@
+*.o
+debug
+release
+compile_flags.txt
