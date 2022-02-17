@@ -1,8 +1,13 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ncurses.h>
 
 #include "map.h"
 #include "defs.h"
+#include "player.h"
+
+#define MAX_DIST 200.0
 
 char *const _map_errstr[] = {
     [MAP_OK] = "MAP_OK",
@@ -33,7 +38,7 @@ int map_from_file(struct map *self, const char *filepath) {
     char *map = calloc(width * height, sizeof(*map));
     if (map == NULL) {
         fclose(fp);
-        return MAP_BAD_SIZE;
+        return MAP_ENOMEM;
     }
 
     int bytes_read = 0;
@@ -68,6 +73,33 @@ void map_print2d(struct map *self) {
         move(y, 0);
         for (int x = 0; x < self->width; ++x) {
             addch(map_xy(self, x, y));
+        }
+    }
+}
+
+void map_print3d(struct map *self, struct player *ply, float fov) {
+    const float ang_min = ply->ang - fov/2.0;
+    const float ang_max = ply->ang + fov/2.0;
+
+    for (float dtheta = ang_min; dtheta < ang_max; dtheta += 0.1) {
+        float dx = cos(dtheta);
+        float dy = sin(dtheta);
+
+        float dist = 0;
+        while (dist < MAX_DIST) {
+            int x = ply->x * dx * dist;
+            int y = ply->y * dy * dist;
+
+            if (map_xy(self, x, y) == '#') {
+                break;
+            }
+
+            dist += 1.0;
+        }
+
+        int x = self->width/2.0 + dx + PI/4.0;
+        for (int y = self->width / 2.0; dist > 0.0; dist -= 10.0, y += 1) {
+            mvaddch(y, x, '#');
         }
     }
 }

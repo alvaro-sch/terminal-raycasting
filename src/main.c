@@ -58,8 +58,9 @@ int main(int argc, char **argv) {
             ctx.running = false;
         }
 
-        map_print2d(&ctx.map);
         p_update(&ctx.ply, &ctx.map, ch);
+
+        map_print3d(&ctx.map, &ctx.ply, 1.0);
         p_draw2d(&ctx.ply);
     }
 
