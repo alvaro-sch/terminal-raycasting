@@ -46,7 +46,7 @@ char map_xy(struct map *self, int x, int y);
 void map_print2d(struct map *self);
 
 /* print map in "3d" using raycasting */
-void map_print3d(struct map *self, struct player *ply);
+void map_print3d(struct map *self, struct player *ply, float fov);
 
 /* frees map data */
 void map_free(struct map *self);
