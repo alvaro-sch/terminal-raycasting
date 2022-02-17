@@ -19,22 +19,18 @@ void p_update(struct player *self, struct map *map, int ch) {
         break;
 
     case 'w':
-        mvaddch(self->y, self->x, ' ');
         diry -= 1;
         break;
 
     case 's':
-        mvaddch(self->y, self->x, ' ');
         diry += 1;
         break;
 
     case 'a':
-        mvaddch(self->y, self->x, ' ');
         dirx -= 1;
         break;
 
     case 'd':
-        mvaddch(self->y, self->x, ' ');
         dirx += 1;
         break;
 
@@ -57,8 +53,6 @@ void p_update(struct player *self, struct map *map, int ch) {
     if (map_xy(map, self->x, self->y) == '#') {
         self->y = old_y;
     }
-
-    DBG_PRINT(0, 0, "[%.2f %.2f]@%.2f", self->x, self->y, self->ang);
 }
 
 void p_draw2d(struct player *self) {
@@ -78,6 +72,7 @@ void p_draw2d(struct player *self) {
         pchar = '\\';
     }
 
+    DBG_PRINT(0, 0, "[%.2f %.2f]@%.2f", self->x, self->y, self->ang);
     mvaddch(self->y, self->x, pchar);
     move(0, 0);
 }
